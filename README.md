@@ -43,8 +43,8 @@
 ### Screenshots
 
 
-- **Node Monitoring Dashboard**: ![Grafana Dashboard](images/grafana_dashboard.jpg)
-- **Docker Monitoring Dashboard**: ![Grafana Dashboard](images/grafana_dashboard.jpg)
+- **Node Monitoring Dashboard**: ![Grafana Dashboard](https://github.com/CrypterENC/postmarketos-poco-f1-server-guide/blob/main/img/node_monitoring.png)
+- **Docker Monitoring Dashboard**: ![Grafana Dashboard](https://github.com/CrypterENC/postmarketos-poco-f1-server-guide/blob/main/img/dock_monitoring.png)
 
 ---
 
