@@ -1,9 +1,10 @@
 # PostmarketOS Setup Guide for Poco F1 as a Server
 
 ## Table of Contents
-1. [Prerequisites](#prerequisites)
-2. [Installation](#installation)
-3. [Driver Setup](#driver-setup)
+1. [Images](#images)
+2. [Prerequisites](#prerequisites)
+3. [Installation](#installation)
+4. [Driver Setup](#driver-setup)
    - [Post-Installation Configuration](#post-installation-configuration)
      - [1. Update System](#1-update-system)
      - [2. Change Device Hostname](#2-change-device-hostname)
@@ -12,7 +13,7 @@
     - [5. Install and Set Up Docker](#5-install-and-set-up-docker)
     - [6. Set Up Firewall](#6-set-up-firewall)
     - [7. Set Up Monitoring with Prometheus and Grafana](#7-set-up-monitoring-with-prometheus-and-grafana)
-4. [Hardware Setup](#hardware-setup)
+5. [Hardware Setup](#hardware-setup)
    - [WiFi Driver Setup](#wifi-driver-setup)
      - [Check WiFi Status](#check-wifi-status)
      - [Connect to WiFi](#connect-to-wifi)
@@ -21,7 +22,7 @@
    - [Bluetooth Driver Setup](#bluetooth-driver-setup)
    - [Audio Driver Setup](#audio-driver-setup)
    - [Camera and Sensors](#camera-and-sensors)
-5. [Server Configuration](#server-configuration)
+6. [Server Configuration](#server-configuration)
    - [1. Enable SSH Server](#1-enable-ssh-server)
    - [2. Install Web Server (Optional)](#2-install-web-server-optional)
    - [3. Install Database (Optional)](#3-install-database-optional)
@@ -35,7 +36,15 @@
    - [7. Monitor System Resources](#7-monitor-system-resources)
    - [8. Set Up Static IP (Optional)](#8-set-up-static-ip-optional)
    - [9. Keep Screen Always On (Server Mode)](#9-keep-screen-always-on-server-mode)
-6. [Troubleshooting](#troubleshooting)
+7. [Troubleshooting](#troubleshooting)
+
+## Images
+
+### Screenshots
+
+
+- **Node Monitoring Dashboard**: ![Grafana Dashboard](images/grafana_dashboard.jpg)
+- **Docker Monitoring Dashboard**: ![Grafana Dashboard](images/grafana_dashboard.jpg)
 
 ---
 
@@ -70,51 +79,11 @@ Before installation, identify your display panel type (critical for kernel selec
 
 ## Installation
 
-### Option 1: Using Prebuilt Images (Recommended)
+There are two main ways to install PostmarketOS on your Poco F1:
 
-#### Step 1: Download Images
-Download from [https://images.postmarketos.org](https://images.postmarketos.org):
-- Select device: `xiaomi-beryllium`
-- Select UI: `console` (for server) or `gnome-mobile` (for desktop)
-- Select your panel variant (tianma or ebbg)
-- Download both `-boot.img.xz` and `.img.xz` files
+### Option 1: Building from Source with pmbootstrap
 
-#### Step 2: Boot into Fastboot
-On the device, run:
-```bash
-sudo reboot bootloader
-```
-
-Or manually: Power off → Hold Volume Down + Power until fastboot appears.
-
-#### Step 3: Extract and Flash Images
-On your PC:
-```bash
-# Extract boot image
-unxz -v 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma-boot.img.xz
-
-# Extract system image
-unxz -v 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma.img.xz
-
-# Erase existing data (optional but recommended)
-fastboot erase userdata
-
-# Flash boot image
-fastboot flash boot 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma-boot.img
-
-# Flash system image
-fastboot flash userdata 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma.img
-
-# Reboot
-fastboot reboot
-```
-
-#### Step 4: Wait for Boot
-The device will boot into PostmarketOS. First boot may take 2-5 minutes.
-
----
-
-### Option 2: Building from Source with pmbootstrap
+For a step-by-step video guide on building from source, watch: [PostmarketOS Installation Tutorial](https://www.youtube.com/watch?v=Rh0tA9-tVXE&t=422s)
 
 #### Step 1: Install pmbootstrap
 On Linux PC:
@@ -159,6 +128,50 @@ pmbootstrap flasher flash_kernel
 pmbootstrap flasher flash_rootfs --partition userdata
 fastboot reboot
 ```
+
+---
+
+### Option 2: Using Prebuilt Images (Recommended for Beginners)
+
+#### Step 1: Download Images
+Download from [https://images.postmarketos.org](https://images.postmarketos.org):
+- Select device: `xiaomi-beryllium`
+- Select UI: `console` (for server) or `gnome-mobile` (for desktop)
+- Select your panel variant (tianma or ebbg)
+- Download both `-boot.img.xz` and `.img.xz` files
+
+#### Step 2: Boot into Fastboot
+On the device, run:
+```bash
+sudo reboot bootloader
+```
+
+Or manually: Power off → Hold Volume Down + Power until fastboot appears.
+
+#### Step 3: Extract and Flash Images
+On your PC:
+```bash
+# Extract boot image
+unxz -v 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma-boot.img.xz
+
+# Extract system image
+unxz -v 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma.img.xz
+
+# Erase existing data (optional but recommended)
+fastboot erase userdata
+
+# Flash boot image
+fastboot flash boot 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma-boot.img
+
+# Flash system image
+fastboot flash userdata 20251107-1346-postmarketOS-v25.06-gnome-mobile-4-xiaomi-beryllium-tianma.img
+
+# Reboot
+fastboot reboot
+```
+
+#### Step 4: Wait for Boot
+The device will boot into PostmarketOS. First boot may take 2-5 minutes.
 
 ---
 
